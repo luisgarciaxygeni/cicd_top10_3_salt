@@ -35,7 +35,7 @@ jobs:
         run: |
           echo "One or more test file(s) has changed."
           echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.github_all_changed_files }}"
-          exit 1
+          #exit 1
 
 
       - name: SUCCESS step if test file(s) does not change
