@@ -1,8 +1,8 @@
-name: CI Deploy
+name: Test CI
 
 on:
   workflow_run: 
-    workflows: [ 'PR TARGET CI' ]
+    workflows: [ 'Build CI' ]
     types: [completed]
     
 env:
