@@ -36,7 +36,7 @@ curl -L \
 
 
 .github/workflows/my_pr.yml
-name: PR TARGET CI
+name: Build CI
 
 on: 
   pull_request: 
@@ -61,7 +61,6 @@ jobs:
           cp runtests.sh ./bin
           echo "${{github.event.pull_request.title}}" > ./bin/PR_TITLE.txt  
           echo "${{github.event.number}}" > ./bin/PR_ID.txt
-          ls -lR 
 
       - name: Archive building artifacts
         uses: actions/upload-artifact@v3
