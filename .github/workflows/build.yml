@@ -57,12 +57,14 @@ jobs:
               unzip salt.zip -d ./salt_pro
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
-              salt --help 
+              #salt --help 
       
               #chmod +x $SALT_DIR/xygeni_salt/salt
               #ls -l $SALT_DIR/xygeni_salt/salt
               #$SALT_DIR/xygeni_salt/salt
               #cd $SALT_DIR/xygeni_salt
+              cd bin
+              sha256sum <(find . -type f -exec sha256sum {} \; | sort)
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
               

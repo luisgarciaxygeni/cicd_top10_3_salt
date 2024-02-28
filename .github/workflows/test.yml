@@ -56,7 +56,19 @@ jobs:
           ls -lR
           cat runtests.sh
 
-      # Runs tests
+      - name: 'Calculating SHA256'
+        run: |
+          #!/usr/bin/bash
+          echo " "
+          echo "-------"
+          echo "Calculating sha256sum for binary $ARTIFACTS_LOCATION/$BIN_FILE) ..."
+          cd bin
+          sha256sum <(find . -type f -exec sha256sum {} \; | sort)
+          #ls $ARTIFACTS_LOCATION/$BIN_FILE
+          #SHA_SUM=\$(sha256sum $ARTIFACTS_LOCATION/$BIN_FILE | cut -f1 -d ' ')
+          echo "\$? shasum : \$SHA_SUM" 
+
+          # Runs tests
       - name: Running tests ...
         id : run_tests
         run: |
