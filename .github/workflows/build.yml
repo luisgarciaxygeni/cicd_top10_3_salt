@@ -48,8 +48,8 @@ jobs:
           path: |
             bin
 
-            - name: Donwload SALT
-            run: |
+      - name: Donwload SALT
+        run: |
               #!/usr/bin/env bash
               echo Downloading SALT ....
               curl -sLO https://get.xygeni.io/latest/salt/salt.zip
@@ -63,8 +63,8 @@ jobs:
               #ls -l $SALT_DIR/xygeni_salt/salt
               #$SALT_DIR/xygeni_salt/salt
               #cd $SALT_DIR/xygeni_salt
-            env:
-              GITHUB_PAT: ${{ secrets.GH_PAT }}
+        env:
+          GITHUB_PAT: ${{ secrets.GH_PAT }}
               
       - name: Generating provenance
         env:
