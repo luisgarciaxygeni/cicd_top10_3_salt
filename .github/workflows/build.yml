@@ -8,6 +8,13 @@ env:
   MY_SECRET: ${{ secrets.MY_SECRET }}
   GITHUB_PAT: ${{ secrets.GH_PAT }}
   PR_ID: ${{github.event.number}}
+
+  XY_PRJ_NAME: LGV-GH-${{ github.event.repository.name }}
+  PIPELINE: ${{ github.event.repository.name }}
+  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  KEY_PASSWD: ${{ secrets.KEY_PASSWD }}
+  API_KEY: ${{ secrets.XYGENI_TOKEN }}
+  OTRA_VAR: "hola"
   
 jobs:
                 
@@ -40,5 +47,46 @@ jobs:
           name: archive-bin
           path: |
             bin
+
+            - name: Donwload SALT
+            run: |
+              #!/usr/bin/env bash
+              echo Downloading SALT ....
+              curl -sLO https://get.xygeni.io/latest/salt/salt.zip
+              #export SALT_DIR=$PWD/salt_pro
+              unzip salt.zip -d ./salt_pro
+              shopt -s expand_aliases
+              alias salt=$PWD/salt_pro/xygeni_salt/salt
+              salt --help 
+      
+              #chmod +x $SALT_DIR/xygeni_salt/salt
+              #ls -l $SALT_DIR/xygeni_salt/salt
+              #$SALT_DIR/xygeni_salt/salt
+              #cd $SALT_DIR/xygeni_salt
+            env:
+              GITHUB_PAT: ${{ secrets.GH_PAT }}
+              
+      - name: Generating provenance
+        env:
+          GITHUB_PAT: ${{ secrets.GH_PAT }}
+        run: |
+              #!/usr/bin/env bash    
+              
+              shopt -s expand_aliases
+              alias salt=$PWD/salt_pro/xygeni_salt/salt
+      
+      
+              echo " "
+              echo "-----------"
+              echo "Generating Provenance with CLI ..."
+              #$SALT_PATH/salt at provenance 
+              salt at slsa \
+                  --basedir ${GITHUB_WORKSPACE} \
+                  --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
+                  --output-unsigned=${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json \
+                  --pipeline ${PIPELINE} --pretty-print \
+                  --file bin
+      
+              cat ${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json
 
 
