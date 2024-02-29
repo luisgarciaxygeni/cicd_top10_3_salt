@@ -102,10 +102,6 @@ jobs:
           salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           #cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
 
-          mkdir ./bin
-          cp bin.zip ./bin
-          ls -l ${GITHUB_WORKSPACE}
-
 
           echo " "
           echo "-------"
