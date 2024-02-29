@@ -81,18 +81,20 @@ jobs:
           salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
 
-          exit 1
+          unzip -o myartifact.zip bin
+          ls -l bin
+
 
           echo " "
           echo "-------"
           echo "Verifying provenance ..."
           # This should pass (the certificate is the same, and the file digest matches)
           salt verify \
-              --basedir $ARTIFACTS_LOCATION \
-              --attestation=${WORKSPACE}/provenance_${JOB_BASE_NAME}.signed.json \
-              --public-key=${WORKSPACE}/Test1_public.pem \
-              --file $BIN_FILE
+              --attestation=${GITHUB_WORKSPACE}/provenance_kk.signed.json \
+              --public-key=${GITHUB_WORKSPACE}/Test1_public.pem \
+              --file bin
 
+             #--basedir $ARTIFACTS_LOCATION \
              #--public-key=${WORKSPACE}/cert_${JOB_BASE_NAME}.pem \
 
 
