@@ -83,7 +83,7 @@ jobs:
 
           pwd
           ls -l
-          unzip -o myartifact.zip bin
+          unzip -o myartifact.zip -d bin
           ls -l
           ls -l bin
 
