@@ -92,6 +92,7 @@ jobs:
       
               cat ${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json
               cat ${GITHUB_WORKSPACE}/lgv.txt
-              grep "registry with id" pp.txt | awk '{print $14}'
+              echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+              grep "registry with id" lgv.txt | awk '{print $14}'
 
 
