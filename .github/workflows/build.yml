@@ -68,9 +68,24 @@ jobs:
               #ls -l $SALT_DIR/xygeni_salt/salt
               #$SALT_DIR/xygeni_salt/salt
               #cd $SALT_DIR/xygeni_salt
-              
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
+
+      
+          - name: Calc SHA for bin
+        run: |
+                #!/usr/bin/env bash
+                #pwd
+                #ls -l
+                #cd bin
+                #ls -l
+                #sha256sum <(find . -type f -exec sha256sum {} \; | sort)
+  
+                zip -r ./bin.zip ./bin
+                cp ./bin.zip ./bin
+                SHA_SUM=\$(sha256sum ./bin.zip | cut -f1 -d ' ')
+                echo $SHA_SUM
+
               
       - name: Generating provenance
         env:
@@ -80,8 +95,6 @@ jobs:
               
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
-      
-
               
       
               echo " "
@@ -93,7 +106,7 @@ jobs:
                   --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
                   --output-unsigned=${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json \
                   --pipeline ${PIPELINE} --pretty-print \
-                  --file bin/bin.zip \
+                  --file ./bin/bin.zip \
                   > ${GITHUB_WORKSPACE}/lgv.txt
       
               cat ${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json
@@ -103,19 +116,7 @@ jobs:
               grep "registry with id" lgv.txt | awk '{print $14}' > ./bin/att.id
 
               
-      - name: Calc SHA for bin
-        run: |
-              #!/usr/bin/env bash
-              #pwd
-              #ls -l
-              #cd bin
-              #ls -l
-              #sha256sum <(find . -type f -exec sha256sum {} \; | sort)
-
-              zip -r ./bin.zip ./bin
-              cp ./bin.zip ./bin
-              SHA_SUM=\$(sha256sum ./bin.zip | cut -f1 -d ' ')
-              echo $SHA_SUM
+      
 
 
       - name: Archive building artifacts
