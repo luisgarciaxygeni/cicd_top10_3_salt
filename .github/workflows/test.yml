@@ -68,6 +68,9 @@ jobs:
           echo "CCCCCCCCCCCCCCCCCCCCCCCCC"
           echo ATT_ID=$ATT_ID
 
+          echo Downloading SALT ....
+          curl -sLO https://get.xygeni.io/latest/salt/salt.zip
+          unzip salt.zip -d ./salt_pro
           shopt -s expand_aliases
           alias salt=$PWD/salt_pro/xygeni_salt/salt
 
