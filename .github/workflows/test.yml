@@ -81,11 +81,19 @@ jobs:
           echo "CCCCCCCCCCCCCCCCCCCCCCCCC"
           echo ATT_ID=$ATT_ID
 
+          
           echo Downloading SALT ....
           curl -sLO https://get.xygeni.io/latest/salt/salt.zip
           unzip salt.zip -d ./salt_pro
           shopt -s expand_aliases
           alias salt=$PWD/salt_pro/xygeni_salt/salt
+
+
+          SHA_SUM=$(sha256sum ./bin.zip | cut -f1 -d ' ')
+          echo $SHA_SUM
+          ATT_ID=$(echo $(salt -q registry search --digest sha256:$SHA_SUM --format json) | jq -r .[-1].gitoidSha256)
+          echo "ATT_ID: $ATT_ID"
+
 
           echo " "
           echo "-------"
