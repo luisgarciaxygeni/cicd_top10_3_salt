@@ -64,7 +64,7 @@ jobs:
           echo " "
           echo "-------"
           echo "Calculating sha256sum for binary $ARTIFACTS_LOCATION/$BIN_FILE) ..."
-          ATT_ID=$(cat kk.txt)
+          ATT_ID=$(cat att.id)
           echo "CCCCCCCCCCCCCCCCCCCCCCCCC"
           echo ATT_ID=$ATT_ID
 
