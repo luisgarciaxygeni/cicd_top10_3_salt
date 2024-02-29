@@ -102,7 +102,9 @@ jobs:
           salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           #cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
 
-          
+          mkdir ./bin
+          cp bin.zip ./bin
+          ls -l ${GITHUB_WORKSPACE}
 
 
           echo " "
@@ -113,7 +115,7 @@ jobs:
               --basedir ${GITHUB_WORKSPACE} \
               --attestation=${GITHUB_WORKSPACE}/provenance_kk.signed.json \
               --public-key=${GITHUB_WORKSPACE}/Test1_public.pem \
-              --file bin.zip
+              --file ./bin/bin.zip
 
              #--basedir $ARTIFACTS_LOCATION \
              #--public-key=${WORKSPACE}/cert_${JOB_BASE_NAME}.pem \
