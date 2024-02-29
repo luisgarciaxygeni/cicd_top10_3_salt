@@ -68,8 +68,32 @@ jobs:
           echo "CCCCCCCCCCCCCCCCCCCCCCCCC"
           echo ATT_ID=$ATT_ID
 
+          shopt -s expand_aliases
+          alias salt=$PWD/salt_pro/xygeni_salt/salt
 
-          # Runs tests
+          echo " "
+          echo "-------"
+          # Download the provenance attestation
+          echo "Downloading the provenance attestation ..." 
+          $SALT_PATH/salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
+          cat ${WORKSPACE}/provenance_kk.signed.json
+
+          exit 1
+
+          echo " "
+          echo "-------"
+          echo "Verifying provenance ..."
+          # This should pass (the certificate is the same, and the file digest matches)
+          salt verify \
+              --basedir $ARTIFACTS_LOCATION \
+              --attestation=${WORKSPACE}/provenance_${JOB_BASE_NAME}.signed.json \
+              --public-key=${WORKSPACE}/Test1_public.pem \
+              --file $BIN_FILE
+
+             #--public-key=${WORKSPACE}/cert_${JOB_BASE_NAME}.pem \
+
+
+      # Runs tests
       - name: Running tests ...
         id : run_tests
         run: |
