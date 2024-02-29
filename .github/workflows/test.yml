@@ -100,6 +100,7 @@ jobs:
           echo "Verifying provenance ..."
           # This should pass (the certificate is the same, and the file digest matches)
           salt verify \
+              --basedir ${GITHUB_WORKSPACE} \
               --attestation=${GITHUB_WORKSPACE}/provenance_kk.signed.json \
               --public-key=${GITHUB_WORKSPACE}/Test1_public.pem \
               --file bin
