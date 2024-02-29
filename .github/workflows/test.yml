@@ -58,6 +58,17 @@ jobs:
           echo "XXXXXXXXXXXXXXXXXXXXXXX"
           cat att.id
 
+      - name: Calc SHA for bin
+        run: |
+          #!/usr/bin/env bash
+          pwd
+          ls -l
+          unzip -o myartifact.zip -d bin
+          ls -l
+          cd bin
+          ls -l
+          sha256sum <(find . -type f -exec sha256sum {} \; | sort)
+
       - name: 'Getting sttestation by ID'
         run: |
           #!/usr/bin/bash
@@ -81,13 +92,7 @@ jobs:
           salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           #cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
 
-          pwd
-          ls -l
-          unzip -o myartifact.zip -d bin
-          ls -l
-          ls -l bin
-          cd bin
-          sha256sum <(find . -type f -exec sha256sum {} \; | sort)
+          
 
 
           echo " "
