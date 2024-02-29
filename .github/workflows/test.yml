@@ -79,10 +79,15 @@ jobs:
           # Download the provenance attestation
           echo "Downloading the provenance attestation ..." 
           salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
-          cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
+          #cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
 
+          pwd
+          ls -l
           unzip -o myartifact.zip bin
+          ls -l
           ls -l bin
+
+          exit 1
 
 
           echo " "
