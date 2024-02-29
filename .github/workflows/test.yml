@@ -58,16 +58,16 @@ jobs:
           echo "XXXXXXXXXXXXXXXXXXXXXXX"
           cat att.id
 
-      - name: Calc SHA for bin
+      - name: Calc SHA for bin and unzippin artifact to get the zip
         run: |
           #!/usr/bin/env bash
           pwd
           ls -l
           unzip -o myartifact.zip -d bin
           ls -l
-          cd bin
-          ls -l
-          sha256sum <(find . -type f -exec sha256sum {} \; | sort)
+          #sha256sum <(find . -type f -exec sha256sum {} \; | sort)
+          SHA_SUM=$(sha256sum ./bin/bin.zip | cut -f1 -d ' ')
+          echo $SHA_SUM
 
       - name: 'Getting sttestation by ID'
         run: |
@@ -79,11 +79,21 @@ jobs:
           echo "CCCCCCCCCCCCCCCCCCCCCCCCC"
           echo ATT_ID=$ATT_ID
 
+          
           echo Downloading SALT ....
           curl -sLO https://get.xygeni.io/latest/salt/salt.zip
           unzip salt.zip -d ./salt_pro
           shopt -s expand_aliases
           alias salt=$PWD/salt_pro/xygeni_salt/salt
+
+
+          #pwd
+          #ls -l
+          #SHA_SUM=$(sha256sum ./bin/bin.zip | cut -f1 -d ' ')
+          #echo $SHA_SUM
+          #ATT_ID=$(echo $(salt -q registry search --digest sha256:$SHA_SUM --format json) | jq -r .[-1].gitoidSha256)
+          #echo "ATT_ID: $ATT_ID"
+
 
           echo " "
           echo "-------"
@@ -91,8 +101,11 @@ jobs:
           echo "Downloading the provenance attestation ..." 
           salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           #cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
-
-          
+          WFR=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json |base64 -d | jq -r .predicate.buildDefinition.internalParameters.environment.GITHUB_WORKFLOW_REF)
+          echo "-------"$WFR"--------"
+          echo $WFR | grep cicd_top10_3_salt\/.github\/workflows\/build.yml
+          RES=$?
+          echo "-------"$RES"--------"
 
 
           echo " "
@@ -103,7 +116,7 @@ jobs:
               --basedir ${GITHUB_WORKSPACE} \
               --attestation=${GITHUB_WORKSPACE}/provenance_kk.signed.json \
               --public-key=${GITHUB_WORKSPACE}/Test1_public.pem \
-              --file bin
+              --file ./bin/bin.zip
 
              #--basedir $ARTIFACTS_LOCATION \
              #--public-key=${WORKSPACE}/cert_${JOB_BASE_NAME}.pem \
