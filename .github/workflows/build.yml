@@ -41,7 +41,7 @@ jobs:
           # Number of commits to fetch. 0 indicates all history for all branches and tags.
           # Default: 1
           fetch-depth: '0'
-              
+
       - name: Building ... 
         run: |
           mkdir ./bin
@@ -81,6 +81,8 @@ jobs:
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
       
+
+              
       
               echo " "
               echo "-----------"
@@ -91,7 +93,7 @@ jobs:
                   --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
                   --output-unsigned=${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json \
                   --pipeline ${PIPELINE} --pretty-print \
-                  --file bin \
+                  --file bin/bin.zip \
                   > ${GITHUB_WORKSPACE}/lgv.txt
       
               cat ${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json
@@ -104,11 +106,16 @@ jobs:
       - name: Calc SHA for bin
         run: |
               #!/usr/bin/env bash
-              pwd
-              ls -l
-              cd bin
-              ls -l
-              sha256sum <(find . -type f -exec sha256sum {} \; | sort)
+              #pwd
+              #ls -l
+              #cd bin
+              #ls -l
+              #sha256sum <(find . -type f -exec sha256sum {} \; | sort)
+
+              zip -r ./bin.zip ./bin
+              cp ./bin.zip ./bin
+              SHA_SUM=\$(sha256sum ./bin.zip | cut -f1 -d ' ')
+              echo $SHA_SUM
 
 
       - name: Archive building artifacts
