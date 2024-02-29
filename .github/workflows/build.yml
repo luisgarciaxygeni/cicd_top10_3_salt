@@ -83,7 +83,7 @@ jobs:
   
                 zip -r ./bin.zip ./bin
                 cp ./bin.zip ./bin
-                SHA_SUM=\$(sha256sum ./bin.zip | cut -f1 -d ' ')
+                SHA_SUM=$(sha256sum ./bin.zip | cut -f1 -d ' ')
                 echo $SHA_SUM
 
               

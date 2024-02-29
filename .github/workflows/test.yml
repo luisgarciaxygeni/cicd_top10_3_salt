@@ -68,7 +68,7 @@ jobs:
           cd bin
           ls -l
           #sha256sum <(find . -type f -exec sha256sum {} \; | sort)
-          SHA_SUM=\$(sha256sum ./bin.zip | cut -f1 -d ' ')
+          SHA_SUM=$(sha256sum ./bin.zip | cut -f1 -d ' ')
           echo $SHA_SUM
 
       - name: 'Getting sttestation by ID'
