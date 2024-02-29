@@ -90,6 +90,7 @@ jobs:
 
 
           pwd
+          ls -l
           SHA_SUM=$(sha256sum ./bin.zip | cut -f1 -d ' ')
           echo $SHA_SUM
           ATT_ID=$(echo $(salt -q registry search --digest sha256:$SHA_SUM --format json) | jq -r .[-1].gitoidSha256)
