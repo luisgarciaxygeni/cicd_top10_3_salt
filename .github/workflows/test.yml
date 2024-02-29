@@ -103,7 +103,7 @@ jobs:
           #cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           WFR=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json |base64 -d | jq -r .predicate.buildDefinition.internalParameters.environment.GITHUB_WORKFLOW_REF)
           echo "-------"$WFR"--------"
-          #echo $WFR | grep cicd_top10_3_salt/.github/workflows/build.yml
+          echo $WFR | grep build.yml
           RES=$?
           echo "-------"$RES"--------"
 
