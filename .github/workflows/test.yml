@@ -87,8 +87,6 @@ jobs:
           ls -l
           ls -l bin
 
-          exit 1
-
 
           echo " "
           echo "-------"
