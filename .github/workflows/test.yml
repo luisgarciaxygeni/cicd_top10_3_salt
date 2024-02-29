@@ -55,6 +55,8 @@ jobs:
           unzip -o myartifact.zip
           ls -lR
           cat runtests.sh
+          echo "XXXXXXXXXXXXXXXXXXX"
+          cat att.id
 
       - name: 'Calculating SHA256'
         run: |
