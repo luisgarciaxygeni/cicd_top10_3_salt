@@ -41,12 +41,7 @@ jobs:
         #env:
         #  PR_TITLE: ${{github.event.pull_request.title}}
  
-      - name: Archive building artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: archive-bin
-          path: |
-            bin
+      
 
       - name: Donwload SALT
         run: |
@@ -93,6 +88,15 @@ jobs:
               cat ${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json
               cat ${GITHUB_WORKSPACE}/lgv.txt
               echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-              grep "registry with id" lgv.txt | awk '{print $14}'
+              
+              grep "registry with id" lgv.txt | awk '{print $14}' > ./bin/att.id
+
+
+      - name: Archive building artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: archive-bin
+          path: |
+            bin
 
 
