@@ -105,7 +105,7 @@ jobs:
               --basedir ${GITHUB_WORKSPACE} \
               --attestation=${GITHUB_WORKSPACE}/provenance_kk.signed.json \
               --public-key=${GITHUB_WORKSPACE}/Test1_public.pem \
-              --file bin
+              --file bin.zip
 
              #--basedir $ARTIFACTS_LOCATION \
              #--public-key=${WORKSPACE}/cert_${JOB_BASE_NAME}.pem \
