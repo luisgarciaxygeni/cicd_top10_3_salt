@@ -87,8 +87,10 @@ jobs:
                   --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
                   --output-unsigned=${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json \
                   --pipeline ${PIPELINE} --pretty-print \
-                  --file bin
+                  --file bin \
+                  > ${GITHUB_WORKSPACE}/lgv.txt
       
               cat ${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json
+              cat ${GITHUB_WORKSPACE}/lgv.txt
 
 
