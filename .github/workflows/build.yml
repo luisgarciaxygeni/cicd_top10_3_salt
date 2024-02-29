@@ -72,7 +72,7 @@ jobs:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
 
       
-      - name: Calc SHA for bin
+      - name: Calc SHA for bin and addes as zip to the artifact
         run: |
                 #!/usr/bin/env bash
                 #pwd

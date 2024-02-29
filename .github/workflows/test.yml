@@ -58,7 +58,7 @@ jobs:
           echo "XXXXXXXXXXXXXXXXXXXXXXX"
           cat att.id
 
-      - name: Calc SHA for bin
+      - name: Calc SHA for bin and unzippin artifact to get the zip
         run: |
           #!/usr/bin/env bash
           pwd
@@ -89,6 +89,7 @@ jobs:
           alias salt=$PWD/salt_pro/xygeni_salt/salt
 
 
+          pwd
           SHA_SUM=$(sha256sum ./bin.zip | cut -f1 -d ' ')
           echo $SHA_SUM
           ATT_ID=$(echo $(salt -q registry search --digest sha256:$SHA_SUM --format json) | jq -r .[-1].gitoidSha256)
