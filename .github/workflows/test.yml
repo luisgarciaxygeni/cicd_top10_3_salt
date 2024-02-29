@@ -75,7 +75,7 @@ jobs:
           echo "-------"
           # Download the provenance attestation
           echo "Downloading the provenance attestation ..." 
-          $SALT_PATH/salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
+          salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           cat ${WORKSPACE}/provenance_kk.signed.json
 
           exit 1
