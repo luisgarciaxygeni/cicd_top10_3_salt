@@ -58,21 +58,14 @@ jobs:
               #!/usr/bin/env bash
               echo Downloading SALT ....
               curl -sLO https://get.xygeni.io/latest/salt/salt.zip
-              #export SALT_DIR=$PWD/salt_pro
               unzip salt.zip -d ./salt_pro
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
-              #salt --help 
-      
-              #chmod +x $SALT_DIR/xygeni_salt/salt
-              #ls -l $SALT_DIR/xygeni_salt/salt
-              #$SALT_DIR/xygeni_salt/salt
-              #cd $SALT_DIR/xygeni_salt
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
 
       
-      - name: Calc SHA for bin and addes as zip to the artifact
+      - name: Calc SHA for bin and add as zip to the artifact
         run: |
                 #!/usr/bin/env bash
                 #pwd
@@ -91,7 +84,8 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
         run: |
-              #!/usr/bin/env bash    
+              #!/usr/bin/env bash
+              exit 0    
               
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
