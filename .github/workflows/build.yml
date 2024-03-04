@@ -79,6 +79,80 @@ jobs:
                 SHA_SUM=$(sha256sum ./bin.zip | cut -f1 -d ' ')
                 echo $SHA_SUM
 
+
+      - name: Generating attestation
+        env:
+          GITHUB_PAT: ${{ secrets.GH_PAT }}
+        run: |
+              #!/usr/bin/env bash
+               
+              
+              shopt -s expand_aliases
+              alias salt=$PWD/salt_pro/xygeni_salt/salt
+
+              echo " "
+              echo "-----------"
+              echo "Intiating the attestation with attestors git and env ..."
+              #/home/luisgarcia/LGV/xygeni_salt/salt attestation init 
+              salt attestation init \
+                            --pipeline ${PIPELINE}_cli \
+                            --basedir ${GITHUB_WORKSPACE} \
+                            --attestor environment \
+                            --attestor git
+              
+              echo " "
+              echo "-----------"
+              echo "Adding materials [src/$SRC_FILE]  to attestation ..."
+              salt attestation add \
+                            --pipeline ${PIPELINE}_cli \
+                            --basedir ${GITHUB_WORKSPACE} \
+                            --name=my_top_material --type material --file ./src  
+
+              echo " "
+              echo "-----------"
+              echo "REMOVING binaries ... -------------------" 
+              rm -rf ${GITHUB_WORKSPACE}/bin
+
+              echo " "
+              echo "----------- "
+              echo "Compiling ... -------------------"
+              salt attestation run \
+                            --step=compile \
+                            --pipeline ${PIPELINE}_cli \
+                            --pretty-print \
+                            --name my_sources --type material --file ${GITHUB_WORKSPACE}/src \
+                            --name my_product --type product  --file ${GITHUB_WORKSPACE}/bin/hello \
+                            -- /usr/bin/gcc ${GITHUB_WORKSPACE}/src/*.c \
+                                -o ${GITHUB_WORKSPACE}/bin/hello
+                            
+                            #-- ${WORKSPACE}/salt_examples/provenance/provider/compila.sh
+
+                            #--type material --file /usr/bin/gcc \
+
+              echo " "
+              echo "-----------"
+              echo "Adding product [bin/$BIN_FILE] to attestation ..."
+              salt attestation add \
+                                --pipeline ${PIPELINE}_cli \
+                                --basedir ${GITHUB_WORKSPACE}/bin \
+                                --name=my_product --type product --file hello 
+
+              
+              echo " "
+              echo "------------"
+              echo "Commiting the drafted attestation using provided keys ..."
+              salt attestation commit \
+                                    --project SALT \
+                                    --pipeline ${PIPELINE}_cli \
+                                    --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
+                                    --output=${GITHUB_WORKSPACE}/${PIPELINE}_cli.signed.json \
+                                    --output-unsigned=${GITHUB_WORKSPACE}/cli_attestattion_${PIPELINE}_unsigned.json \
+                                    --pretty-print
+        
+                                    #--config=$SALT_PATH/conf/salt.yaml \
+                                    #cat ${WORKSPACE}/${PIPELINE}_cli.statement.json
+        
+              
               
       - name: Generating provenance
         env:
