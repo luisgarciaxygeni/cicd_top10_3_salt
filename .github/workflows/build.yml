@@ -85,7 +85,11 @@ jobs:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
         run: |
               #!/usr/bin/env bash
-               
+              
+              java -version
+              mvn -version
+              exit 1
+
               
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
