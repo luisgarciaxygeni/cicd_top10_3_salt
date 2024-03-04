@@ -116,6 +116,7 @@ jobs:
               echo " "
               echo "----------- "
               echo "Compiling ... -------------------"
+              mkdir ${GITHUB_WORKSPACE}/bin
               salt attestation run \
                             --step=compile \
                             --pipeline ${PIPELINE}_cli \
