@@ -152,6 +152,9 @@ jobs:
         
                                     #--config=$SALT_PATH/conf/salt.yaml \
                                     #cat ${WORKSPACE}/${PIPELINE}_cli.statement.json
+
+              cat ${GITHUB_WORKSPACE}/cli_attestattion_${PIPELINE}_unsigned.json 
+              exit 1
         
               
               
