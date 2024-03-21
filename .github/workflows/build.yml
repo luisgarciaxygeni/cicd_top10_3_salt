@@ -89,6 +89,7 @@ jobs:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
         run: |
               #!/usr/bin/env bash
+              exit 0
               
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
@@ -168,7 +169,7 @@ jobs:
               cat ./bin/att.id
 
               ls -l ./bin
-              exit 1
+              
 
               
 
@@ -260,7 +261,7 @@ jobs:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
         run: |
               #!/usr/bin/env bash
-              exit 0
+              
 
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
@@ -293,7 +294,7 @@ jobs:
               grep "registry with id" lgv.txt | awk '{print $14}' > ./bin/att.id
               cat ./bin/att.id
 
-              
+              exit 1
       
 
 
