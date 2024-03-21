@@ -266,6 +266,7 @@ jobs:
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
               
+              mvn clean package
       
               echo " "
               echo "-----------"
