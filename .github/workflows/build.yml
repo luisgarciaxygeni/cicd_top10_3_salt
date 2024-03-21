@@ -119,7 +119,7 @@ jobs:
               rm -rf ${GITHUB_WORKSPACE}/bin
 
 
-              cp ./AddPage_mod.java ./src/main/java/org/cysecurity/cspf/jvl/controller/AddPage.java
+              #cp ./AddPage_mod.java ./src/main/java/org/cysecurity/cspf/jvl/controller/AddPage.java
 
 
               echo " "
