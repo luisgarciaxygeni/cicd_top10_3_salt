@@ -160,8 +160,11 @@ jobs:
 
               cat ${GITHUB_WORKSPACE}/cli_attestattion_${PIPELINE}_unsigned.json 
 
-              ls -l ${WORKSPACE}/bin
-              
+              echo " "
+              pwd
+              ls -l
+              ls -l ./bin
+
               exit 1
 
       - name: Generating attestation (.c)
