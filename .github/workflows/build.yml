@@ -97,7 +97,7 @@ jobs:
               echo "-----------"
               echo "Intiating the attestation with attestors git and env ..."
               #/home/luisgarcia/LGV/xygeni_salt/salt attestation init 
-              salt -nb attestation init \
+              salt attestation init \
                             --pipeline ${PIPELINE}_cli \
                             --basedir ${GITHUB_WORKSPACE} \
                             --attestor environment \
@@ -107,7 +107,7 @@ jobs:
               echo " "
               echo "-----------"
               echo "Adding materials [src/$SRC_FILE]  to attestation ..."
-              salt -nb attestation add \
+              salt attestation add \
                             --pipeline ${PIPELINE}_cli \
                             --basedir ${GITHUB_WORKSPACE} \
                             --name=my_top_material --type material --file ./src  
@@ -121,7 +121,7 @@ jobs:
               echo "----------- "
               echo "Compiling ... -------------------"
               mkdir ${GITHUB_WORKSPACE}/bin
-              salt -nb attestation run \
+              salt attestation run \
                             --step=compile \
                             --pipeline ${PIPELINE}_cli \
                             --pretty-print \
@@ -139,7 +139,7 @@ jobs:
               echo "-----------"
               echo "Adding product [bin/$BIN_FILE] to attestation ..."
               cp target/JavaVulnerableLab.war ./bin
-              salt -nb attestation add \
+              salt attestation add \
                                 --pipeline ${PIPELINE}_cli \
                                 --basedir ${GITHUB_WORKSPACE}/target \
                                 --name=my_product --type product --file JavaVulnerableLab.war 
@@ -148,7 +148,7 @@ jobs:
               echo " "
               echo "------------"
               echo "Commiting the drafted attestation using provided keys ..."
-              salt -nb attestation commit \
+              salt attestation commit \
                                     --project SALT \
                                     --pipeline ${PIPELINE}_cli \
                                     --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
