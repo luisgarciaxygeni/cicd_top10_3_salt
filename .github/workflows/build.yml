@@ -104,6 +104,11 @@ jobs:
                             #\
                             #--attestor git
               
+              salt attestation add \
+                            --pipeline ${PIPELINE}_cli \
+                            --basedir ${GITHUB_WORKSPACE} \
+                            --attestor git
+
               echo " "
               echo "-----------"
               echo "Adding materials [src/$SRC_FILE]  to attestation ..."
