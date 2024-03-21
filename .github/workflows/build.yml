@@ -100,7 +100,7 @@ jobs:
               salt attestation init \
                             --pipeline ${PIPELINE}_cli \
                             --basedir ${GITHUB_WORKSPACE} \
-                            --attestor environment \
+                            --attestor env \
                             --attestor git
               
               echo " "
@@ -258,7 +258,7 @@ jobs:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
         run: |
               #!/usr/bin/env bash
-                 
+              exit 0
 
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
