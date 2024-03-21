@@ -204,6 +204,7 @@ jobs:
               echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
               
               grep "registry with id" lgv.txt | awk '{print $14}' > ./bin/att.id
+              cat ./bin/att.id
 
               exit 1
       
