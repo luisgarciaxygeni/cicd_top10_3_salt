@@ -100,7 +100,13 @@ jobs:
           echo "Downloading the provenance attestation ..." 
           salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           #cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
-          WFR=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json |base64 -d | jq -r .predicate.buildDefinition.internalParameters.environment.GITHUB_WORKFLOW_REF)
+          
+          # this is for provenance
+          #WFR=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json |base64 -d | jq -r .predicate.buildDefinition.internalParameters.environment.GITHUB_WORKFLOW_REF)
+          
+          # this is for attestation
+          WFR=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json |base64 -d | jq -r .predicate..attestations[1].predicate.variables.GITHUB_WORKFLOW_REF)
+          
           echo "WFR-------"$WFR"--------"
           echo $WFR | grep cicd_top10_3_salt\/.github\/workflows\/build.yml
           RES=$?
