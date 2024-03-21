@@ -106,6 +106,18 @@ jobs:
           RES=$?
           echo "-------"$RES"--------"
 
+          SHA_ATT_MATERIAL=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json | base64 -d | jq -r .predicate.attestations[0].predicate.materials[].digest[])
+          SHA_STEP_MATERIAL=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json | base64 -d | jq -r .predicate.attestations[3].predicate.materials[0].digest[])
+          echo "SHA_ATT_MATERIAL $SHA_ATT_MATERIAL"
+          echo "SHA_STEP_MATERIAL $SHA_STEP_MATERIAL"
+          if [ "\$SHA_ATT_MATERIAL" = "\$SHA_STEP_MATERIAL" ]; then
+              echo " "
+          else
+                           
+              echo Salt - Attestations FAILED !!
+              echo Salt - Materials are different !!
+              exit 1
+          fi
 
           echo " "
           echo "-------"
