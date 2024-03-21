@@ -100,8 +100,9 @@ jobs:
               salt attestation init \
                             --pipeline ${PIPELINE}_cli \
                             --basedir ${GITHUB_WORKSPACE} \
-                            --attestor env \
-                            --attestor git
+                            --attestor environment 
+                            #\
+                            #--attestor git
               
               echo " "
               echo "-----------"
