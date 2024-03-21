@@ -168,7 +168,7 @@ jobs:
 
               ls -l ./bin
 
-              exit 1
+              
 
       - name: Generating attestation (.c)
         env:
