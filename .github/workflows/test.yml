@@ -67,7 +67,6 @@ jobs:
           #sha256sum <(find . -type f -exec sha256sum {} \; | sort)
           SHA_SUM=$(sha256sum ./JavaVulnerableLab.war| cut -f1 -d ' ')
           echo $SHA_SUM
-          exit 1
 
       - name: 'Getting sttestation by ID'
         run: |
