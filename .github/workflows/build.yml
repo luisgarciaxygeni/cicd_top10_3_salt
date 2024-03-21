@@ -153,18 +153,19 @@ jobs:
                                     --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
                                     --output=${GITHUB_WORKSPACE}/${PIPELINE}_cli.signed.json \
                                     --output-unsigned=${GITHUB_WORKSPACE}/cli_attestattion_${PIPELINE}_unsigned.json \
-                                    --pretty-print
+                                    --pretty-print \
+                                    > ${GITHUB_WORKSPACE}/lgv.txt
         
                                     #--config=$SALT_PATH/conf/salt.yaml \
                                     #cat ${WORKSPACE}/${PIPELINE}_cli.statement.json
 
               cat ${GITHUB_WORKSPACE}/cli_attestattion_${PIPELINE}_unsigned.json 
+              cat ${GITHUB_WORKSPACE}/lgv.txt
+              echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+              
+              grep "registry with id" lgv.txt | awk '{print $14}' > ./bin/att.id
+              cat ./bin/att.id
 
-              echo " "
-              pwd
-              ls -l
-              cd ${GITHUB_WORKSPACE}
-              ls -l 
               ls -l ./bin
 
               exit 1
