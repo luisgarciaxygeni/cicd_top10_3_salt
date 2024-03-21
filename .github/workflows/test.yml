@@ -52,11 +52,15 @@ jobs:
 
       - name: 'Unzip artifact'
         run: |
+          pwd
+          ls -l
           unzip -o myartifact.zip
-          ls -lR
+          ls -l
           cat runtests.sh
           echo "XXXXXXXXXXXXXXXXXXXXXXX"
           cat att.id
+          exit 1
+
 
       - name: Calc SHA for bin and unzippin artifact to get the zip
         run: |
