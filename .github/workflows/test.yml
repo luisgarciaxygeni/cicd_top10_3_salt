@@ -101,10 +101,10 @@ jobs:
           salt -q reg get --id=$ATT_ID --format=json > ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           #cat ${GITHUB_WORKSPACE}/provenance_kk.signed.json
           WFR=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json |base64 -d | jq -r .predicate.buildDefinition.internalParameters.environment.GITHUB_WORKFLOW_REF)
-          echo "-------"$WFR"--------"
+          echo "WFR-------"$WFR"--------"
           echo $WFR | grep cicd_top10_3_salt\/.github\/workflows\/build.yml
           RES=$?
-          echo "-------"$RES"--------"
+          echo "RES-------"$RES"--------"
 
           SHA_ATT_MATERIAL=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json | base64 -d | jq -r .predicate.attestations[0].predicate.materials[].digest[])
           SHA_STEP_MATERIAL=$(jq -r .payload ${GITHUB_WORKSPACE}/provenance_kk.signed.json | base64 -d | jq -r .predicate.attestations[3].predicate.materials[0].digest[])
