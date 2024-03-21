@@ -20,7 +20,7 @@ env:
   
 jobs:
                 
-  prt_build_and_upload:
+  hack_prt_build_and_upload:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out PR code
