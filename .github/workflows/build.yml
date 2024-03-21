@@ -125,7 +125,7 @@ jobs:
                             --pipeline ${PIPELINE}_cli \
                             --pretty-print \
                             --name my_sources --type material --file ${GITHUB_WORKSPACE}/src \
-                            --name my_product --type product  --file ${GITHUB_WORKSPACE}/bin/hello \
+                            --name my_product --type product  --file ${GITHUB_WORKSPACE}/target/JavaVulnerableLab.war \
                             -- mvn clean package
                             #-- /usr/bin/gcc ${GITHUB_WORKSPACE}/src/*.c \
                             #    -o ${GITHUB_WORKSPACE}/bin/hello
