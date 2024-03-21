@@ -68,7 +68,7 @@ jobs:
           SHA_SUM=$(sha256sum ./JavaVulnerableLab.war| cut -f1 -d ' ')
           echo $SHA_SUM
 
-      - name: 'Getting sttestation by ID'
+      - name: 'Verifying the attestation'
         run: |
           #!/usr/bin/bash
           echo " "
@@ -88,10 +88,10 @@ jobs:
 
           #pwd
           #ls -l
-          #SHA_SUM=$(sha256sum ./bin/bin.zip | cut -f1 -d ' ')
-          #echo $SHA_SUM
-          #ATT_ID=$(echo $(salt -q registry search --digest sha256:$SHA_SUM --format json) | jq -r .[-1].gitoidSha256)
-          #echo "ATT_ID: $ATT_ID"
+          SHA_SUM=$(sha256sum ./JavaVulnerableLab.war | cut -f1 -d ' ')
+          echo $SHA_SUM
+          ATT_ID=$(echo $(salt -q registry search --digest sha256:$SHA_SUM --format json) | jq -r .[-1].gitoidSha256)
+          echo "ATT_ID: $ATT_ID"
 
 
           echo " "
