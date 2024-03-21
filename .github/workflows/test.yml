@@ -20,8 +20,8 @@ jobs:
           echo "I am alive"
 
       # By default, checks out base code (not PR code)
-      #- name: Checkout repository
-      #  uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       #- name: Echoing runtests.sh after downloading artifact
       #  run: |
