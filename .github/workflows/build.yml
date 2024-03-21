@@ -48,13 +48,12 @@ jobs:
           touch ./bin/mybin.exe
           echo "${{github.event.pull_request.title}}" > ./bin/PR_TITLE.txt
           echo "$PR_ID" > ./bin/PR_ID.txt
-          ls -lR 
           java -version
           mvn -version
           #apt-get update ; apt-get install maven default-jdk -y ; update-alternatives --config javac
           mvn clean package 
           ls -l target/*.war
-          exit 1
+          cp target/JavaVulnerableLab.war ./bin
         #env:
         #  PR_TITLE: ${{github.event.pull_request.title}}
  
@@ -80,10 +79,10 @@ jobs:
                 #ls -l
                 #sha256sum <(find . -type f -exec sha256sum {} \; | sort)
   
-                zip -r ./bin.zip ./bin
-                cp ./bin.zip ./bin
-                SHA_SUM=$(sha256sum ./bin.zip | cut -f1 -d ' ')
-                echo $SHA_SUM
+                #zip -r ./bin.zip ./bin
+                #cp ./bin.zip ./bin
+                #SHA_SUM=$(sha256sum ./bin.zip | cut -f1 -d ' ')
+                #echo $SHA_SUM
 
 
       - name: Generating attestation
@@ -91,7 +90,7 @@ jobs:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
         run: |
               #!/usr/bin/env bash
-              
+              exit 0              
               java -version
               mvn -version
               docker ps
@@ -174,7 +173,7 @@ jobs:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
         run: |
               #!/usr/bin/env bash
-              exit 0    
+                 
               
               shopt -s expand_aliases
               alias salt=$PWD/salt_pro/xygeni_salt/salt
@@ -184,12 +183,20 @@ jobs:
               echo "-----------"
               echo "Generating Provenance with CLI ..."
               #$SALT_PATH/salt at provenance 
+              #salt at slsa \
+              #    --basedir ${GITHUB_WORKSPACE} \
+              #    --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
+              #    --output-unsigned=${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json \
+              #    --pipeline ${PIPELINE} --pretty-print \
+              #    --file ./bin/bin.zip \
+              #    > ${GITHUB_WORKSPACE}/lgv.txt
+              
               salt at slsa \
-                  --basedir ${GITHUB_WORKSPACE} \
+                  --basedir ${GITHUB_WORKSPACE}/target \
                   --key="${PRIVATE_KEY}" --public-key=${GITHUB_WORKSPACE}/Test1_public.pem --key-password=${KEY_PASSWD} \
                   --output-unsigned=${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json \
                   --pipeline ${PIPELINE} --pretty-print \
-                  --file ./bin/bin.zip \
+                  --file ./JavaVulnerableLab.war \
                   > ${GITHUB_WORKSPACE}/lgv.txt
       
               cat ${GITHUB_WORKSPACE}/cli_provenance_${PIPELINE}_unsigned.json
@@ -198,7 +205,7 @@ jobs:
               
               grep "registry with id" lgv.txt | awk '{print $14}' > ./bin/att.id
 
-              
+              exit 1
       
 
 
