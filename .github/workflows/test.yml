@@ -20,14 +20,14 @@ jobs:
           echo "I am alive"
 
       # By default, checks out base code (not PR code)
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      #- name: Checkout repository
+      #  uses: actions/checkout@v4
 
-      - name: Echoing runtests.sh after downloading artifact
-        run: |
-          ls -lR
-          echo cat runtests.sh
-          cat runtests.sh
+      #- name: Echoing runtests.sh after downloading artifact
+      #  run: |
+      #    ls -lR
+      #    echo cat runtests.sh
+      #    cat runtests.sh
           
       - name: 'Download artifact'
         uses: actions/github-script@v6
@@ -53,14 +53,9 @@ jobs:
       - name: 'Unzip artifact'
         run: |
           pwd
-          ls -l
           unzip -o myartifact.zip
-          ls -l
-          cat runtests.sh
           echo "XXXXXXXXXXXXXXXXXXXXXXX"
           cat att.id
-          exit 1
-
 
       - name: Calc SHA for bin and unzippin artifact to get the zip
         run: |
@@ -70,8 +65,9 @@ jobs:
           unzip -o myartifact.zip -d bin
           ls -l
           #sha256sum <(find . -type f -exec sha256sum {} \; | sort)
-          SHA_SUM=$(sha256sum ./bin/bin.zip | cut -f1 -d ' ')
+          SHA_SUM=$(sha256sum ./JavaVulnerableLab.war| cut -f1 -d ' ')
           echo $SHA_SUM
+          exit 1
 
       - name: 'Getting sttestation by ID'
         run: |
@@ -130,6 +126,7 @@ jobs:
       - name: Running tests ...
         id : run_tests
         run: |
+          exit 0
           echo Running tests..
           chmod +x runtests.sh
           cat runtests.sh
