@@ -163,6 +163,8 @@ jobs:
               echo " "
               pwd
               ls -l
+              cd ${GITHUB_WORKSPACE}
+              ls -l 
               ls -l ./bin
 
               exit 1
