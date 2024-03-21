@@ -49,6 +49,12 @@ jobs:
           echo "${{github.event.pull_request.title}}" > ./bin/PR_TITLE.txt
           echo "$PR_ID" > ./bin/PR_ID.txt
           ls -lR 
+          java -version
+          mvn -version
+          #apt-get update ; apt-get install maven default-jdk -y ; update-alternatives --config javac
+          mvn clean package 
+          ls -l target/*.war
+          exit 1
         #env:
         #  PR_TITLE: ${{github.event.pull_request.title}}
  
