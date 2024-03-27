@@ -149,7 +149,8 @@ jobs:
                                 --basedir ${GITHUB_WORKSPACE}/target \
                                 --name=my_product --type product --file JavaVulnerableLab.war 
 
-              echo $PRIVATE_KEY | base64
+              echo $PRIVATE_KEY | base64 > kk.txt
+              cat kk.txt
 
               echo " "
               echo "------------"
